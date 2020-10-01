@@ -25,7 +25,7 @@ The pull (haul) the images...
 
     $ ./haul.sh
 
-The script wil force a pull by first removing each image.
+The script will force a pull by first removing each image.
 
 >   Remember that you're pulling everything - so this may take some time,
     depending on what you're pulling.
