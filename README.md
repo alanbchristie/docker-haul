@@ -3,6 +3,8 @@
 ![GitHub](https://img.shields.io/github/license/alanbchristie/docker-haul)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/alanbchristie/docker-haul)
 
+[![CodeFactor](https://www.codefactor.io/repository/github/alanbchristie/docker-haul/badge)](https://www.codefactor.io/repository/github/alanbchristie/docker-haul)
+
 A simple script that pulls all the container images from docker
 for a user and namespace. Thanks to [Jerry Baker] and his
 `dockerhub-v2-api-user.sh` [gist].
