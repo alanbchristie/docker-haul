@@ -32,10 +32,17 @@ The script will force a pull by first removing each image.
 >   Remember that you're pulling everything - so this may take some time,
     depending on what you're pulling.
 
+## Haul options
+
 If you don't want to keep the pulled images add `--no-keep` to the
 command: -
 
     $ ./haul.sh --no-keep
+
+If you just want to list all the images and tags add `--just-list` to the
+command: -
+
+    $ ./haul.sh --just-list
 
 ---
 

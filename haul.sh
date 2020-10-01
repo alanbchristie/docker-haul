@@ -16,13 +16,22 @@ set -e
 : "${DOCKER_PASSWORD?Need to set DOCKER_PASSWORD}"
 : "${DOCKER_NAMESPACE?Need to set DOCKER_NAMESPACE}"
 
-# Has the user done '--no-keep'?
+# Has the user used '--no-keep'?
 NO_KEEP=0
 if [[ $# -gt 0 ]]
 then
   if [[ ${1} == '--no-keep' ]]
   then
     NO_KEEP=1
+  fi
+fi
+# or, has the user used '--just-list'?
+JUST_LIST=0
+if [[ $# -gt 0 ]]
+then
+  if [[ ${1} == '--just-list' ]]
+  then
+    JUST_LIST=1
   fi
 fi
 
@@ -57,16 +66,25 @@ do
         jq -r '.results|.[]|.name')
   # Compile a list of images with tags
   # and put assemble them into the FULL_IMAGE_LIST variable
-  NUM_TAGS=0
   for j in ${IMAGE_TAGS}
   do
     FULL_IMAGE_LIST="${FULL_IMAGE_LIST} ${DOCKER_NAMESPACE}/${i}:${j}"
     ((NUM_IMAGES=NUM_IMAGES+1))
-    ((NUM_TAGS=NUM_TAGS+1))
   done
-  echo "   (${NUM_TAGS})"
 done
-echo "+> Got ${NUM_IMAGES} images"
+echo "+> Got ${NUM_IMAGES} images (and their tags)"
+
+# If "--just-list" list the images and stop here.
+if [[ ${JUST_LIST} == 1 ]]
+then
+  echo "+> Images follow..."
+  for i in ${FULL_IMAGE_LIST}
+  do
+    echo "   ${i}"
+  done
+  echo "+> Done."
+  exit 0
+fi
 
 # Force a pull of an image. We do this by: -
 # - deleting any local copy
