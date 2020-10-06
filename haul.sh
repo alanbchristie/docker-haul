@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # Haul (pull) images using the Docker Hub V2 API.
+#
+# Usage: haul.sh --help
+#        haul.sh --just-list
+#        haul.sh --no-keep
+#
 # With thanks to Jerry Baker
 # (https://gist.github.com/kizbitz/e59f95f7557b4bbb8bf2)
 #
@@ -15,6 +20,18 @@ set -e
 : "${DOCKER_USERNAME?Need to set DOCKER_USERNAME}"
 : "${DOCKER_PASSWORD?Need to set DOCKER_PASSWORD}"
 : "${DOCKER_NAMESPACE?Need to set DOCKER_NAMESPACE}"
+
+# Has the user used '--help'?
+if [[ $# -gt 0 ]]
+then
+  if [[ ${1} == '--help' ]]
+  then
+    echo "Usage: haul.sh --help"
+    echo "       haul.sh --just-list"
+    echo "       haul.sh --no-keep"
+    exit 0
+  fi
+fi
 
 # Has the user used '--no-keep'?
 NO_KEEP=0
@@ -44,7 +61,7 @@ TOKEN=$(curl -s -H "Content-Type: application/json" \
         https://hub.docker.com/v2/users/login/ | \
         jq -r .token)
 
-echo "+> Getting registries..."
+echo "+> Getting repos..."
 REG_LIST=$(curl -s -H "Authorization: JWT ${TOKEN}" \
         https://hub.docker.com/v2/repositories/${DOCKER_NAMESPACE}/?page_size=100 | \
         jq -r '.results|.[]|.name')
@@ -54,9 +71,9 @@ do
   echo "   ${i}"
   ((NUM_REG=NUM_REG+1))
 done
-echo "+> Got ${NUM_REG} registries"
+echo "+> Got ${NUM_REG} repos"
 
-echo "+> Getting registry images..."
+echo "+> Getting images..."
 NUM_IMAGES=0
 for i in ${REG_LIST}
 do

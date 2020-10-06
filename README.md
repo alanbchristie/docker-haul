@@ -23,16 +23,20 @@ the same as your username...
     $ export DOCKER_PASSWORD=*******
     $ export DOCKER_NAMESPACE=alanbchristie 
 
-The pull (haul) the images...
+To pull (haul) ans retain all the images...
 
     $ ./haul.sh
 
-The script will force a pull by first removing each image.
+The script will force a pull of every image by first removing each one.
 
 >   Remember that you're pulling everything - so this may take some time,
     depending on what you're pulling.
 
 ## Haul options
+
+To get very brief help add `--help` to the command: -
+
+    $ ./haul.sh --help
 
 If you don't want to keep the pulled images add `--no-keep` to the
 command: -
