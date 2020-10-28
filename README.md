@@ -11,6 +11,7 @@ for a user and namespace. Thanks to [Jerry Baker] and his
 
 To run the script you will need: -
 
+-   curl
 -   [jq]
 -   docker
 -   Credentials
